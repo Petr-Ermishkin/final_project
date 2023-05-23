@@ -13,6 +13,12 @@
     this.heading = heading;
   }
   
+  // The angle has to be in radians
+  Photon(PVector pos, float angle){
+    this.pos = pos;
+    heading = new PVector(cos(angle), sin(angle));
+  }
+  
   void update(){
     pos = pos.add(heading);
   }
