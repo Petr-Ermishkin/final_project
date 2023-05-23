@@ -1,6 +1,7 @@
 public class Ray{
   // All of the real portions of the ray
   Line[] real;
+  int curLine;
   
   // All of the virtual portions of the ray
   Line[] virtual;
@@ -8,22 +9,31 @@ public class Ray{
   PVector start;
   
   // The ray lacks a heading since that's contained in the photon
-  Photon lead;
+  Photon photon;
   
   Ray(){
     real = new Line[0];
     virtual = new Line[0];
+    curLine = 0;
     
     start = new PVector(0,0);
-    lead = new Photon();
+    photon = new Photon();
   }
   
-  Ray(PVector start, PVector heading){
-    real = new Line[0];
+  Ray(PVector start, float angle){
+    real = new Line[1];
     virtual = new Line[0];
+    curLine = 0;
     
     this.start = start;
-    lead = new Photon(start, heading);
+    photon = new Photon(start, angle);
+    real[0] = new Line(start);
+  }
+  
+  void update(){
+    photon.update();
+    // the photon's new position is used as the end position for the line update
+    real[curLine].update(photon.pos);
   }
   
   // Changes the direction the photon is going, used by Object.reflect() and Object.refract()
