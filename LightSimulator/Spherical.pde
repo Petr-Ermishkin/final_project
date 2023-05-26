@@ -8,6 +8,12 @@
 // Height represents the length of the main
 // Width represents the length of of the perpendicular
 public class Spherical extends Object{
+  
+  void drawObj(){}
+  
+  Float hitDirection(Ray ray){
+  return PI;
+}
    
    // otherwise diverging
    boolean isConverging;
