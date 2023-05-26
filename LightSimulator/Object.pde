@@ -1,4 +1,4 @@
-public class Object {
+public abstract class Object {
   PVector pos;
   int objWidth;
   int objHeight;
@@ -6,17 +6,46 @@ public class Object {
   // If both are false, the ray is absorbed.
   // Currently they are mutually exclusive for the sake of simplicity. Potential for partial reflection / refraction in the future.
   Boolean isReflective;
-  Boolean isRefractive;
-  double indexOfRefraction;
+  //Boolean isRefractive;
+  //double indexOfRefraction;
   
   Object(){
-    pos = new PVector();
-    // to be finished
+    pos = new PVector(0,0);
+    objWidth = 0;
+    objHeight = 0;
+    isReflective = false;
   }
   
-  void Reflect(Ray ray){
+  Object(PVector pos, int objWidth, int objHeight, boolean isReflective){
+    this.pos = pos;
+    this.objWidth = objWidth;
+    this.objHeight = objHeight;
+    this.isReflective = isReflective;
   }
   
-  void Refract(Ray ray){
+  abstract void drawObj();
+  
+  abstract Float hitDirection(Ray ray);
+  
+  
+  void hit(Ray ray){
+    Float normal = hitDirection(ray);
+    if(normal == null)
+      return;
+      
+     if(isReflective){
+       reflect(ray, normal);
+     }
+      
+    
+  }
+  
+  // The angle represents the angle of the normal of the surface which the ray hit
+  void reflect(Ray ray, float normal){
+    float newAngle = normal - ray.photon.angle;
+    ray.changeHeading(newAngle);
+  }
+  
+  void refract(Ray ray, float angle){
   }
 }
