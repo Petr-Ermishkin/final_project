@@ -12,6 +12,7 @@ public class Spherical extends Object{
   void drawObj(){}
   
   Float hitDirection(Ray ray){
+    // stub
   return PI;
 }
    

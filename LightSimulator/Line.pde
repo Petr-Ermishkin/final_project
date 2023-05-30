@@ -1,5 +1,6 @@
 public class Line{
   PVector start;
+  // changes continously as the line gets drawn
   PVector end;
   
   Line(){

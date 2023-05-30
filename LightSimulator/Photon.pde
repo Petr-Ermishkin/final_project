@@ -12,7 +12,7 @@
   Photon(PVector pos, PVector heading){
     this.pos = pos;
     this.heading = heading;
-    angle = atan(heading.x / heading.y);
+    angle = atan2(heading.y - pos.y , heading.x - pos.x);
   }
   
   // The angle has to be in radians

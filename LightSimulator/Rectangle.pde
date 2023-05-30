@@ -13,6 +13,7 @@ public class Rectangle extends Object{
   }
   
   // checks if the ray has hit the object and returns the angle of the normal of the surface that was hit
+  // currently does not work as intended
   Float hitDirection(Ray ray){
     if(!(int(ray.photon.pos.x) >= leftBound && int(ray.photon.pos.x) <= rightBound && int(ray.photon.pos.y) >= topBound && int(ray.photon.pos.y) >= topBound))
       return null;

@@ -5,7 +5,7 @@ public abstract class Object {
   
   // If both are false, the ray is absorbed.
   // Currently they are mutually exclusive for the sake of simplicity. Potential for partial reflection / refraction in the future.
-  Boolean isReflective;
+  boolean isReflective;
   //Boolean isRefractive;
   //double indexOfRefraction;
   
@@ -42,6 +42,7 @@ public abstract class Object {
   
   // The angle represents the angle of the normal of the surface which the ray hit
   void reflect(Ray ray, float normal){
+    // currently does not work as intended
     float newAngle = normal - ray.photon.angle;
     ray.changeHeading(newAngle);
   }

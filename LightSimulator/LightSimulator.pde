@@ -1,10 +1,7 @@
-Ray[] rays = new Ray[] {new Ray(new PVector(500, 250), 0), 
-new Ray(new PVector(500, 250), PI / 3),
-new Ray(new PVector(500, 250), -PI / 6)};
+ArrayList<Ray> rays = new ArrayList<Ray>(); 
 
-//rays[0] = new Ray(new PVector(500, 250), -PI * 2 / 3);
-//rays[1] = new Ray(new PVector(500, 250), -PI / 4);
-//rays[2] = new Ray(new PVector(500, 250), -11*PI / 6);
+ArrayList<Object> objects = new ArrayList<Object>();
+
 Object rect = new Rectangle(new PVector(550, 00), 50, 550, true);
 
 // Eventually try to implement an object that acts as the bounds of the simulation
@@ -15,23 +12,48 @@ Object rect = new Rectangle(new PVector(550, 00), 50, 550, true);
 void setup(){
   size(1000,500);
   background(255,255,255);
+  
+  //rays.add(new Ray(new PVector(500, 250), 0));
+  //rays.add(new Ray(new PVector(500, 250), - PI / 6));
+  //rays.add(new Ray(new PVector(500, 250), -11* PI / 6));
+  
+  //objects.add(new Rectangle(new PVector(550, 00), 50, 550, true));
+  //objects.add(new Rectangle(new PVector(300, 00), 50, 550, true));
 }
 
 void draw(){
-  rect.drawObj();
+  for(Object obj: objects){
+    obj.drawObj();
+  }
+  
   //bounding.drawObj();
   for(Ray ray: rays){
+    for(Object obj: objects){
+      obj.hit(ray);
+    }
     rect.hit(ray);
     //bounding.hit(ray);
     ray.update();
   }
-  //r.update();
-  //r2.update();
-  //r3.update();
 }
 
-void mouseClicked(){
-  //r.changeHeading(1,-1);
-  //r2.changeHeading(-1,1);
-  //r3.changeHeading(1,-1);
+void mousePressed(){
+  if(keyPressed && keyCode == SHIFT){
+    objects.add(new Rectangle(new PVector(mouseX, mouseY), 0, 0, true));
+  }
+  else
+    rays.add(new Ray(new PVector(mouseX, mouseY)));
+}
+
+void mouseReleased(){
+  if(keyPressed && keyCode == SHIFT){
+    Object lastObject = objects.get(objects.size() - 1);
+    lastObject.objWidth = int(mouseX - lastObject.pos.x);
+    lastObject.objHeight = int(mouseY - lastObject.pos.y);
+  }
+  else{
+    // the most recently added ray (the one made by mousePressed)
+    Ray lastRay = rays.get(rays.size() - 1);
+    lastRay.changeHeading(atan2(mouseY - lastRay.photon.pos.y , mouseX - lastRay.photon.pos.x));
+  }
 }
