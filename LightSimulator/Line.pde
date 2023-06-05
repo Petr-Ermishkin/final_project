@@ -1,7 +1,8 @@
 public class Line{
-  PVector start;
+  private PVector start;
+  
   // changes continously as the line gets drawn
-  PVector end;
+  private PVector end;
   
   Line(){
     start = new PVector(0,0);
@@ -9,18 +10,20 @@ public class Line{
   }
   
   Line(PVector start){
-    this.start = start;
-    end = start;
+    this.start = new PVector(start.x, start.y);
+    end = new PVector(start.x, start.y);
 
   }
   
   void update(PVector newEnd){
-    end = newEnd;
-    drawLine();
+    end = new PVector(newEnd.x, newEnd.y);
+    //drawLine();
     
   }
   
   void drawLine(){
     line(start.x, start.y, end.x, end.y);
+    //println("start: " + start.x + " " + start.y);
+    //println("end: " + end.x + " " + end.y);
   }
 }

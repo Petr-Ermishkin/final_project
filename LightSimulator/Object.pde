@@ -43,10 +43,14 @@ public abstract class Object {
   // The angle represents the angle of the normal of the surface which the ray hit
   void reflect(Ray ray, float normal){
     // currently does not work as intended
-    float newAngle = normal - ray.photon.angle;
-    ray.changeHeading(newAngle);
+    float newAngle = normal;
+    //ray.photon.validateAngle();
+    //ray.changeHeading(ray.photon.angle);
+    ray.addLine();
   }
   
   void refract(Ray ray, float angle){
   }
+  
+  
 }

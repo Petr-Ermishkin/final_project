@@ -22,6 +22,10 @@
     heading = new PVector(cos(angle), sin(angle));
   }
   
+  void validateAngle(){
+    angle = atan2(heading.y - pos.y , heading.x - pos.x);
+  }
+  
   void update(){
     pos = pos.add(heading);
     //println(heading.x);
