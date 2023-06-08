@@ -12,7 +12,7 @@
   Photon(PVector pos, PVector heading){
     this.pos = pos;
     this.heading = heading;
-    angle = atan(heading.x / heading.y);
+    angle = atan2(heading.y - pos.y , heading.x - pos.x);
   }
   
   // The angle has to be in radians
@@ -20,6 +20,10 @@
     this.pos = pos;
     this.angle = angle;
     heading = new PVector(cos(angle), sin(angle));
+  }
+  
+  void validateAngle(){
+    angle = atan2(heading.y - pos.y , heading.x - pos.x);
   }
   
   void update(){
