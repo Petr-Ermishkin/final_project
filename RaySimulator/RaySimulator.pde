@@ -1,4 +1,4 @@
-String[] presetNames = new String[]{"Description", "Sandbox", "Mirror", "Maze"};
+String[] presetNames = new String[]{"Description", "Sandbox", "Mirror"};
 int presetNum = 0;
 GameState gameState;
 
@@ -8,10 +8,8 @@ boolean lastShift = false;
 Ray tempOne;
 Ray tempTwo;
 
-//ArrayList<Ray> rays = new ArrayList<Ray>(); 
-
-//ArrayList<Object> objects = new ArrayList<Object>();
-
+float[] angleMultipliers = new float[] {1, 2.0/3.0, 1.0/3.0, 1.0/4.0, 1.0/6.0, 1.0/12.0, 1.0/24.0};
+int currentMultiplier = 5;
 
 
 // Driver, contains all of the simulator versions, user interaction, and updates for everything
@@ -19,7 +17,6 @@ void setup(){
   size(1000,500);
   background(255,255,255);
   gameState = new GameState(presetNum);
-  //objects.add(new Rectangle(new PVector(0, 0), width -1, height -1, true, color(255,255,255)));
 }
 
 void draw(){
@@ -29,11 +26,15 @@ void draw(){
 }
 
 void keyPressed(){
+  if(key == '=' || key == '+' && currentMultiplier < 6)
+    currentMultiplier++;
+  if(key == '-' && currentMultiplier > 0)
+    currentMultiplier--;
   if(key == 'R' || key == 'r'){
     gameState = new GameState(presetNum);
     background(255,255,255);
   }
-  if(key == '0' || key == '1' || key == '2' || key == '3' ){
+  if(key == '0' || key == '1' || key == '2'){
     presetNum = Character.getNumericValue(key);
     gameState = new GameState(presetNum);
   }
@@ -41,12 +42,15 @@ void keyPressed(){
 
 void mouseClicked(){
   if(mouseButton == RIGHT){
-    for(float theta = 0; theta < 2*PI; theta += PI / 6){
-      gameState.rays.add(new Ray(new PVector(mouseX, mouseY), theta, true));
+    boolean isBlack = true;
+      if(presetNum == 2)
+        isBlack = mouseX < width / 2;
+    for(float theta = 0; theta < 2*PI; theta += PI * angleMultipliers[currentMultiplier]){
+      gameState.rays.add(new Ray(new PVector(mouseX, mouseY), theta, isBlack));
     }
     if(presetNum == 2){
-      for(float theta = 0; theta < 2*PI; theta += PI / 6){
-        gameState.rays.add(new Ray(new PVector(width - mouseX, height - mouseY), theta, false));
+      for(float theta = 0; theta < 2*PI; theta += PI * angleMultipliers[currentMultiplier]){
+        gameState.rays.add(new Ray(new PVector(width - mouseX, height - mouseY), theta, !isBlack));
     }
     }
   }
@@ -56,14 +60,16 @@ void mousePressed(){
   if(mouseButton != LEFT)
     return;
   if(keyPressed && keyCode == SHIFT){
-    gameState.objects.add(new Rectangle(new PVector(mouseX, mouseY), 0, 0, true, color(120,180,210)));
+    gameState.objects.add(new Rectangle(new PVector(mouseX, mouseY), 0, 0, color(120,180,210)));
     lastShift = true;
   }
   else{
-    tempOne = new Ray(new PVector(mouseX, mouseY), true);
-    //gameState.rays.add(new Ray(new PVector(mouseX, mouseY)));
+    boolean isBlack = true;
+      if(presetNum == 2)
+        isBlack = mouseX < width / 2;
+    tempOne = new Ray(new PVector(mouseX, mouseY), isBlack);
     if(presetNum == 2){
-      tempTwo = new Ray(new PVector(width - mouseX, height - mouseY), false);
+      tempTwo = new Ray(new PVector(width - mouseX, height - mouseY), !isBlack);
     }
   }
 }
@@ -74,7 +80,7 @@ void mouseReleased(){
   if(keyPressed && keyCode == SHIFT && lastShift){
       // fix this! So ugly and inefficient!
       Object lastObject = gameState.objects.get(gameState.objects.size() - 1);
-      gameState.objects.set(gameState.objects.size() - 1, new Rectangle(new PVector(lastObject.pos.x, lastObject.pos.y), int(mouseX - lastObject.pos.x), int(mouseY - lastObject.pos.y), true, lastObject.objColor));
+      gameState.objects.set(gameState.objects.size() - 1, new Rectangle(new PVector(lastObject.pos.x, lastObject.pos.y), int(mouseX - lastObject.pos.x), int(mouseY - lastObject.pos.y), lastObject.objColor));
       lastShift = false;
   }
   else{

@@ -4,8 +4,8 @@
 public class Rectangle extends Object{
   int leftBound, rightBound, topBound, bottomBound;
   
-   Rectangle(PVector pos, int objWidth, int objHeight, boolean isReflective, color objColor){
-    super(pos, objWidth, objHeight, isReflective, objColor);
+   Rectangle(PVector pos, int objWidth, int objHeight, color objColor){
+    super(pos, objWidth, objHeight, objColor);
     leftBound = int(pos.x);
     rightBound = int(pos.x + objWidth);
     topBound = int(pos.y);

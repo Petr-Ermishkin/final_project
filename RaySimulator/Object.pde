@@ -4,25 +4,17 @@ public abstract class Object {
   int objHeight;
   color objColor;
   
-  // If both are false, the ray is absorbed.
-  // Currently they are mutually exclusive for the sake of simplicity. Potential for partial reflection / refraction in the future.
-  boolean isReflective;
-  //Boolean isRefractive;
-  //double indexOfRefraction;
-  
   Object(){
     pos = new PVector(0,0);
     objWidth = 0;
     objHeight = 0;
-    isReflective = false;
     objColor = color(0,0,0);
   }
   
-  Object(PVector pos, int objWidth, int objHeight, boolean isReflective, color objColor){
+  Object(PVector pos, int objWidth, int objHeight, color objColor){
     this.pos = pos;
     this.objWidth = objWidth;
     this.objHeight = objHeight;
-    this.isReflective = isReflective;
     this.objColor = objColor;
   }
   
@@ -35,12 +27,7 @@ public abstract class Object {
     Float normal = hitDirection(ray);
     if(normal == null)
       return;
-      
-     if(isReflective){
-       reflect(ray, normal);
-     }
-      
-    
+    reflect(ray, normal); 
   }
   
   // The angle represents the angle of the normal of the surface which the ray hit
@@ -52,6 +39,4 @@ public abstract class Object {
     ray.addLine();
   }
   
-  void refract(Ray ray, float angle){
-  }
 }
