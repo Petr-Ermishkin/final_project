@@ -4,8 +4,8 @@
 public class Rectangle extends Object{
   int leftBound, rightBound, topBound, bottomBound;
   
-   Rectangle(PVector pos, int objWidth, int objHeight, boolean isReflective){
-    super(pos, objWidth, objHeight, isReflective);
+   Rectangle(PVector pos, int objWidth, int objHeight, boolean isReflective, color objColor){
+    super(pos, objWidth, objHeight, isReflective, objColor);
     leftBound = int(pos.x);
     rightBound = int(pos.x + objWidth);
     topBound = int(pos.y);
@@ -39,6 +39,7 @@ public class Rectangle extends Object{
   }
   
   void drawObj(){
+    fill(objColor);
     rect(pos.x, pos.y, objWidth, objHeight);
   }
   
