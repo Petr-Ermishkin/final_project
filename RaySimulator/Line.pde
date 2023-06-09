@@ -4,14 +4,12 @@ public class Line{
   // changes continously as the line gets drawn
   private PVector end;
   
-  Line(){
-    start = new PVector(0,0);
-    end = new PVector(0,0);
-  }
+  boolean isBlack;
   
-  Line(PVector start){
+  Line(PVector start, boolean isBlack){
     this.start = new PVector(start.x, start.y);
     end = new PVector(start.x, start.y);
+    this.isBlack = isBlack;
 
   }
   
@@ -20,6 +18,10 @@ public class Line{
   }
   
   void drawLine(){
+    if(isBlack)
+      stroke(0);
+    else
+      stroke(255);
     line(start.x, start.y, end.x, end.y);
   }
 }

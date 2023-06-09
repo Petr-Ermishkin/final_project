@@ -5,26 +5,30 @@ public class Ray{
   // The ray lacks a heading since that's contained in the photon
   private Photon photon;
   
+  boolean isBlack = true;
+  
   // This version of the constructor is used by mousepressed() in order to create a ray whoose
   // heading / angle isn't yet established
-  Ray(PVector start){
+  Ray(PVector start, boolean isBlack){
     lines = new ArrayList<Line>();
     currentLine = 0;
     
     
     photon = new Photon(start, new PVector(0,0));
-    lines.add(new Line(start));
+    lines.add(new Line(start, isBlack));
+    
+    this.isBlack = isBlack;
   }
   
   
-  Ray(PVector start, float angle){
+  Ray(PVector start, float angle, boolean isBlack){
     lines = new ArrayList<Line>();
-    //virtual = new ArrayList<Line>();
     currentLine = 0;
     
     //this.start = start;
     photon = new Photon(start, angle);
-    lines.add(new Line(start));
+    lines.add(new Line(start, isBlack));
+    this.isBlack = isBlack;
   }
   
   void update(){
@@ -49,7 +53,7 @@ public class Ray{
   //}
   
   void addLine(){
-    lines.add(new Line(photon.pos));
+    lines.add(new Line(photon.pos, isBlack));
     currentLine++;
   }
   
