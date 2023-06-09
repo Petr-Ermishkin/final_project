@@ -8,7 +8,7 @@ boolean lastShift = false;
 Ray tempOne;
 Ray tempTwo;
 
-float[] angleMultipliers = new float[] {1, 2.0/3.0, 1.0/3.0, 1.0/4.0, 1.0/6.0, 1.0/12.0, 1.0/24.0};
+float[] angleMultipliers = new float[] {1, 2.0/3.0, 1.0/3.0, 1.0/4.0, 1.0/6.0, 1.0/12.0, 1.0/24.0, 1.0/48.0};
 int currentMultiplier = 5;
 
 
