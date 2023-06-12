@@ -26,7 +26,7 @@ void draw(){
 }
 
 void keyPressed(){
-  if(key == '=' || key == '+' && currentMultiplier < 6)
+  if((key == '=' || key == '+') && currentMultiplier < 6)
     currentMultiplier++;
   if(key == '-' && currentMultiplier > 0)
     currentMultiplier--;
